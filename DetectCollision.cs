@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DetectCollision : MonoBehaviour
 {
+    int score;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +16,7 @@ public class DetectCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // Check collisons with other objects
@@ -24,9 +25,23 @@ public class DetectCollision : MonoBehaviour
         GameObject objectCollided = coll.collider.gameObject;
 
         // check if we are colliding a coin gameobject.
-        if ( objectCollided.tag == "pick_me" ) {
+        if ( objectCollided.tag == "pick_me" || objectCollided.tag == "pick_me_red" ) {
             // destroy the coin.
             Destroy( objectCollided );
+
+            // red coins give 5 coins.
+            if ( objectCollided.tag == "pick_me_red" ) {
+                score += 5;
+            } else {
+                score++;
+            }
+            
+            // add extra life to player when 100 coins are collected.
+            if ( score > 100 ) {
+                // add life to player here.
+                score = 0;
+            }
+            print( "Score : " + score );
         }
 
         // check if we are colliding a red ball so the Scene is restarted.
