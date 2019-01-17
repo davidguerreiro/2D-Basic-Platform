@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class DetectCollision : MonoBehaviour
 {
     int score;
+    int lives;
 
     // Start is called before the first frame update
     void Start()
@@ -38,10 +39,16 @@ public class DetectCollision : MonoBehaviour
             
             // add extra life to player when 100 coins are collected.
             if ( score > 100 ) {
-                // add life to player here.
+                lives++;
                 score = 0;
             }
-            print( "Score : " + score );
+
+            // add extra live when the player picks up a live.
+            if ( objectCollided.tag == "pick_me_blue" ) {
+                lives++;
+            }
+            
+            print( "Lives : " + lives + " | Score  : " + score );
         }
 
         // check if we are colliding a red ball so the Scene is restarted.
