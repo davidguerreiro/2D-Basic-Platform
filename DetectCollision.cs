@@ -26,7 +26,7 @@ public class DetectCollision : MonoBehaviour
         GameObject objectCollided = coll.collider.gameObject;
 
         // check if we are colliding a coin gameobject.
-        if ( objectCollided.tag == "pick_me" || objectCollided.tag == "pick_me_red" ) {
+        if ( objectCollided.tag == "pick_me" || objectCollided.tag == "pick_me_red" || objectCollided.tag == "pick_me_blue" ) {
             // destroy the coin.
             Destroy( objectCollided );
 
@@ -47,7 +47,7 @@ public class DetectCollision : MonoBehaviour
             if ( objectCollided.tag == "pick_me_blue" ) {
                 lives++;
             }
-            
+
             print( "Lives : " + lives + " | Score  : " + score );
         }
 
