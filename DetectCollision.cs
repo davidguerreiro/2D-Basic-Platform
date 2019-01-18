@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class DetectCollision : MonoBehaviour
 {
     int score;
-    int lives;
+    int lives = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class DetectCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     // Check collisons with other objects
