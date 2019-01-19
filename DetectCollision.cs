@@ -54,7 +54,7 @@ public class DetectCollision : MonoBehaviour
         // check if we are colliding a red ball so the Scene is restarted.
         if ( objectCollided.tag == "avoid_me" ) {
             // destroy the red ball and then reload the scene.
-            Destroy( objectCollided );
+            // Destroy( objectCollided );
             SceneManager.LoadScene( SceneManager.GetActiveScene().name );
         }
     }
