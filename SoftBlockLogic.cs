@@ -9,7 +9,7 @@ public class SoftBlockLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -18,13 +18,23 @@ public class SoftBlockLogic : MonoBehaviour
         
     }
 
-    void blockIsHit() {
+    // block logic when it is hit by the player.
+    public void blockIsHit() {
         // TODO - Display animation.
-        // TODO - Show children gameobjects.
         hardness--;
 
+        // if the block if not destroyed, show fissures.
         if ( hardness <= 0 ) {
             Destroy( gameObject );
+        } else {
+            showFissures();
+        }
+    }
+
+    // display all fissures in the block after it is hit but not destroyed.
+    private void showFissures() {
+        for ( int i = 0; i < transform.childCount; i++ ) {
+            transform.GetChild( i ).gameObject.SetActive( true );
         }
     }
 }
