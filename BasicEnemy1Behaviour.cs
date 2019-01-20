@@ -51,13 +51,15 @@ public class BasicEnemy1Behaviour : MonoBehaviour
      * enemy collsions controller - used only for movement
      * to see kill and defeat collisions please check children
      * gameObjects colliders.
+     * 
+     * Move this collision to children gameObject.
      */
      void OnCollisionEnter2D( Collision2D coll ) {
         GameObject objectCollider = coll.gameObject;
-
+        
         // flip enemy if you collide any kind of solid object ( like walls ).
         if ( Array.IndexOf( isSolid, coll.gameObject.tag ) > -1  ) {
-            // change enemy direction.
+            speed *= - 1;
         }
      }
     // this enemy is an sphere but does not rotate.
