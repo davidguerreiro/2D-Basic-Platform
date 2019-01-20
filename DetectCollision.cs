@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DetectCollision : MonoBehaviour
 {
+    int coins;
     int score;
     int lives = 3;
 
@@ -32,15 +33,15 @@ public class DetectCollision : MonoBehaviour
 
             // red coins give 5 coins.
             if ( objectCollided.tag == "pick_me_red" ) {
-                score += 5;
+                coins += 5;
             } else {
-                score++;
+                coins++;
             }
             
             // add extra life to player when 100 coins are collected.
-            if ( score > 100 ) {
+            if ( coins > 100 ) {
                 lives++;
-                score = 0;
+                coins = 0;
             }
 
             // add extra live when the player picks up a live.
@@ -48,7 +49,7 @@ public class DetectCollision : MonoBehaviour
                 lives++;
             }
 
-            print( "Lives : " + lives + " | Score  : " + score );
+            print( "Lives : " + lives + " | Coins  : " + coins + " | Score : " + score );
         }
 
         // check if we are colliding a red ball so the Scene is restarted.
