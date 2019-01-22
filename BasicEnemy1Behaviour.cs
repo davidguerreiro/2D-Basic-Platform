@@ -22,18 +22,27 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     
 
     public int health = 1;  // enemys health - when 0 it is destroyed.
-    public float speed = -0.10f;   // enemy's horizontal speed.
+    public float speed = - 8f;   // enemy's horizontal speed.
+    public enum Orientation
+    {
+        Right,
+        Left,
+    };
+
+    public Orientation orientation;
     public bool canMove = true;  // check if the enemy can move.
     private Rigidbody2D rigidbodyComponent; // Enemy gameObject RigiBody component.
     
-    // Start is called before the first frame update
+    // Start is called before the first frame update.
     void Start()
     {
         resetRotation();
         rigidbodyComponent = GetComponent<Rigidbody2D>();
 
+        Debug.Log( orientation.GetType() );
+
         if ( canMove ) {
-            moveEnemy();
+            moveEnemy( orientation );
         }
     }
 
@@ -43,7 +52,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         resetRotation();
 
         if ( canMove ) {
-            moveEnemy();
+            moveEnemy( orientation );
         }
     }
 
@@ -58,7 +67,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         GameObject objectCollider = coll.gameObject;
         
         // flip enemy if you collide any kind of solid object ( like walls ).
-        if ( Array.IndexOf( isSolid, coll.gameObject.tag ) > -1  ) {
+        if ( Array.IndexOf( isSolid, coll.gameObject.tag ) > - 1  ) {
             speed *= - 1;
         }
      }
@@ -70,9 +79,17 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     }
 
     // move enemy on the x axis.
-    void moveEnemy() {
+    void moveEnemy( Orientation orientation ) {
+
+        // fix and set enemy orientation.
+        string direction = orientation.ToString();
+
+        if (  ( direction == "Right" && speed < 0 ) || ( direction == "Left" && speed > 0 ) ) {
+            speed *= - 1;
+        }
+
         if ( rigidbodyComponent != null ) {
-            rigidbodyComponent.velocity = new Vector3( speed, 0, 0 );
+            rigidbodyComponent.velocity = new Vector3( speed * Time.deltaTime, 0, 0 );
         }
     }
     
