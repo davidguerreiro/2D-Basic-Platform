@@ -6,17 +6,6 @@ public class SoftBlockLogic : MonoBehaviour
 {
 
     public int hardness = 2;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     // block logic when it is hit by the player.
     public void blockIsHit() {

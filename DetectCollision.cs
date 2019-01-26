@@ -9,18 +9,6 @@ public class DetectCollision : MonoBehaviour
     int score;
     int lives = 3;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // Check collisons with other objects
     void OnCollisionEnter2D( Collision2D coll ) {
         // get tag from the GameObject we have just collided.

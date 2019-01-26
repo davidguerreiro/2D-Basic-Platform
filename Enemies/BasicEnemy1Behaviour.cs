@@ -19,7 +19,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         "invisible_wall",
     };
 
-    private string[] toIgnore = new string[] {       // used to check which gameobjects are ignored by enemies, like coins.
+    public string[] toIgnore = new string[] {       // used to check which gameobjects are ignored by enemies, like coins.
         "pick_me"
     };
 
@@ -58,8 +58,6 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     void Update()
     {
         resetRotation();
-
-        Debug.Log( speed );
 
         if ( canMove ) {
             moveEnemy();
@@ -102,11 +100,11 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     }
 
     // ignore collisions in enemy collider and in children colliders.
-    void IgnoreCollision( GameObject objectCollider ) {
-        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>() );
-        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), KillerColliderRight.GetComponent<CircleCollider2D>() );
-        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), KillerColliderLeft.GetComponent<CircleCollider2D>() );
-        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), WeakPointCollider.GetComponent<PolygonCollider2D>() );
+    public void IgnoreCollision( GameObject other ) {
+        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), KillerColliderRight.GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), KillerColliderLeft.GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), WeakPointCollider.GetComponent<PolygonCollider2D>() );
     }
     
 }
