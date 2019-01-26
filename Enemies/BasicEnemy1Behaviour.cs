@@ -14,8 +14,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
      */
 
     private string[] isSolid = new string[] {       // used to check when the enemy collides solid objects so the enemy sprite is flipped.
-        "soft_block",
-        "solid_element",
+        "is_solid_wall",
         "invisible_wall",
     };
 
@@ -58,6 +57,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     void Update()
     {
         resetRotation();
+        Debug.Log( speed );
 
         if ( canMove ) {
             moveEnemy();
@@ -83,6 +83,11 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         if ( Array.IndexOf( toIgnore, coll.gameObject.tag ) > - 1 ) {
            IgnoreCollision( objectCollider );
         }
+
+        // destroy enemy if it touchs a game over point.
+        if ( objectCollider.tag == "player-death" ) {
+            Destroy( this.gameObject );
+        }
      }
     // this enemy is an sphere but does not rotate.
     private void resetRotation() {
@@ -101,10 +106,16 @@ public class BasicEnemy1Behaviour : MonoBehaviour
 
     // ignore collisions in enemy collider and in children colliders.
     public void IgnoreCollision( GameObject other ) {
-        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>() );
-        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), KillerColliderRight.GetComponent<CircleCollider2D>() );
-        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), KillerColliderLeft.GetComponent<CircleCollider2D>() );
-        Physics2D.IgnoreCollision( other.GetComponent<CircleCollider2D>(), WeakPointCollider.GetComponent<PolygonCollider2D>() );
+
+        // ignore collisions for pick-up items.
+        if ( other.tag == "pick_me" ) {
+            CircleCollider2D otherCollider = other.GetComponent<CircleCollider2D>();
+
+            Physics2D.IgnoreCollision( otherCollider, GetComponent<CircleCollider2D>() );
+            Physics2D.IgnoreCollision( otherCollider, KillerColliderRight.GetComponent<CircleCollider2D>() );
+            Physics2D.IgnoreCollision( otherCollider, KillerColliderLeft.GetComponent<CircleCollider2D>() );
+            Physics2D.IgnoreCollision( otherCollider, WeakPointCollider.GetComponent<PolygonCollider2D>() );
+        }
     }
     
 }

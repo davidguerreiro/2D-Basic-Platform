@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamagePlayer : MonoBehaviour
+public class EnemyIsDamaged : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
