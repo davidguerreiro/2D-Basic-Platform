@@ -27,14 +27,8 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     
 
     public int health = 1;  // enemys health - when 0 it is destroyed.
-    public float speed = - 8f;   // enemy's horizontal speed.
-    public enum Orientation
-    {
-        Right,
-        Left,
-    };
-
-    public Orientation orientation;
+    public float speed = 60;   // enemy's horizontal speed.
+    private string direction;
     public bool canMove = true;  // check if the enemy can move.
     private Rigidbody2D rigidbodyComponent; // Enemy gameObject RigiBody component.
 
@@ -49,10 +43,8 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         resetRotation();
         rigidbodyComponent = GetComponent<Rigidbody2D>();
 
-        Debug.Log( orientation.GetType() );
-
         if ( canMove ) {
-            moveEnemy( orientation );
+            moveEnemy();
         }
 
         // get children colliders.
@@ -67,8 +59,10 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     {
         resetRotation();
 
+        Debug.Log( speed );
+
         if ( canMove ) {
-            moveEnemy( orientation );
+            moveEnemy();
         }
     }
 
@@ -89,7 +83,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
 
         // check if the gameobject collided has to be ignored.
         if ( Array.IndexOf( toIgnore, coll.gameObject.tag ) > - 1 ) {
-            IgnoreCollision( objectCollider );
+           IgnoreCollision( objectCollider );
         }
      }
     // this enemy is an sphere but does not rotate.
@@ -100,14 +94,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     }
 
     // move enemy on the x axis.
-    void moveEnemy( Orientation orientation ) {
-
-        // fix and set enemy orientation.
-        string direction = orientation.ToString();
-
-        if (  ( direction == "Right" && speed < 0 ) || ( direction == "Left" && speed > 0 ) ) {
-            speed *= - 1;
-        }
+    void moveEnemy() {
 
         if ( rigidbodyComponent != null ) {
             rigidbodyComponent.velocity = new Vector3( speed * Time.deltaTime, 0, 0 );
