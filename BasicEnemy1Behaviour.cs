@@ -19,6 +19,11 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         "invisible_wall",
     };
 
+    private string[] toIgnore = new string[] {       // used to check which gameobjects are ignored by enemies, like coins.
+        "pick_me"
+    };
+
+
     
 
     public int health = 1;  // enemys health - when 0 it is destroyed.
@@ -32,6 +37,11 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     public Orientation orientation;
     public bool canMove = true;  // check if the enemy can move.
     private Rigidbody2D rigidbodyComponent; // Enemy gameObject RigiBody component.
+
+    // children colliders.
+    private GameObject KillerColliderRight;
+    private GameObject KillerColliderLeft;
+    private GameObject WeakPointCollider;
     
     // Start is called before the first frame update.
     void Start()
@@ -44,6 +54,12 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         if ( canMove ) {
             moveEnemy( orientation );
         }
+
+        // get children colliders.
+        KillerColliderRight = transform.Find( "KillColliderRight" ).gameObject;
+        KillerColliderLeft  = transform.Find( "KillColliderLeft" ).gameObject;
+        WeakPointCollider   = transform.Find( "WeakPointCollider" ).gameObject;
+
     }
 
     // Update is called once per frame
@@ -67,8 +83,13 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         GameObject objectCollider = coll.gameObject;
         
         // flip enemy if you collide any kind of solid object ( like walls ).
-        if ( Array.IndexOf( isSolid, coll.gameObject.tag ) > - 1  ) {
+        if ( Array.IndexOf( isSolid, objectCollider.tag ) > - 1  ) {
             speed *= - 1;
+        }
+
+        // check if the gameobject collided has to be ignored.
+        if ( Array.IndexOf( toIgnore, coll.gameObject.tag ) > - 1 ) {
+            IgnoreCollision( objectCollider );
         }
      }
     // this enemy is an sphere but does not rotate.
@@ -91,6 +112,14 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         if ( rigidbodyComponent != null ) {
             rigidbodyComponent.velocity = new Vector3( speed * Time.deltaTime, 0, 0 );
         }
+    }
+
+    // ignore collisions in enemy collider and in children colliders.
+    void IgnoreCollision( GameObject objectCollider ) {
+        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), KillerColliderRight.GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), KillerColliderLeft.GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( objectCollider.GetComponent<CircleCollider2D>(), WeakPointCollider.GetComponent<PolygonCollider2D>() );
     }
     
 }
