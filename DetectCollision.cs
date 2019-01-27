@@ -16,11 +16,13 @@ public class DetectCollision : MonoBehaviour
     };
 
     private GameController gameController;              // used to add coins, lives, etc.
+    private Rigidbody2D player_RigiBody;                // player rigibody used to alter player physics.
 
     // called on the very first frame.
     void Start() {
         // get game controller script to modify game logic.
         gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
+        player_RigiBody = GameObject.Find( "Player" ).GetComponent<Rigidbody2D>();
         coins = gameController.GetCoins();
         lives = gameController.GetLives();
         score = gameController.GetScore();
@@ -51,8 +53,7 @@ public class DetectCollision : MonoBehaviour
              * Destroy object collected - TODO: Remove physycis from coin
              * so player is not stopped by the collected object on collision.
              */
-            
-            Destroy( objectCollided );
+            print( "here collision" );
 
             if ( objectCollided.tag == "pick_me" ) {
                 gameController.AddCoin();
@@ -74,6 +75,7 @@ public class DetectCollision : MonoBehaviour
                 gameController.AddLife();
             }
 
+            Destroy( objectCollided );
         }
 
         // check if we are colliding a damaging item and if so, game over for now.
