@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivationRadio : MonoBehaviour
-{
-    // Start is called before the first frame update
+public class GameController : MonoBehaviour
+{   
+
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -15,4 +15,5 @@ public class ActivationRadio : MonoBehaviour
     {
         
     }
+
 }

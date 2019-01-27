@@ -28,8 +28,9 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     public int health = 1;  // enemys health - when 0 it is destroyed.
     public float speed = 60;   // enemy's horizontal speed.
     private string direction;
-    public bool canMove = true;  // check if the enemy can move.
+    public bool canMove = false;  // check if the enemy can move.
     private Rigidbody2D rigidbodyComponent; // Enemy gameObject RigiBody component.
+    private CircleCollider2D otherCircleCollider; // Used for ignore Collision
 
     // children colliders.
     private GameObject KillerColliderRight;
@@ -44,6 +45,8 @@ public class BasicEnemy1Behaviour : MonoBehaviour
 
         if ( canMove ) {
             moveEnemy();
+        } else {
+            resetVelocity();
         }
 
         // get children colliders.
@@ -57,10 +60,11 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     void Update()
     {
         resetRotation();
-        Debug.Log( speed );
 
         if ( canMove ) {
             moveEnemy();
+        } else {
+            resetVelocity();
         }
     }
 
@@ -76,19 +80,22 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         
         // flip enemy if you collide any kind of solid object ( like walls ).
         if ( Array.IndexOf( isSolid, objectCollider.tag ) > - 1  ) {
+            print( "here" );
             speed *= - 1;
         }
 
         // check if the gameobject collided has to be ignored.
         if ( Array.IndexOf( toIgnore, coll.gameObject.tag ) > - 1 ) {
-           IgnoreCollision( objectCollider );
+           GetColliderComponent( objectCollider );
         }
 
         // destroy enemy if it touchs a game over point.
+
         if ( objectCollider.tag == "player-death" ) {
             Destroy( this.gameObject );
         }
      }
+     
     // this enemy is an sphere but does not rotate.
     private void resetRotation() {
         Quaternion q = transform.rotation;
@@ -104,17 +111,32 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         }
     }
 
-    // ignore collisions in enemy collider and in children colliders.
-    public void IgnoreCollision( GameObject other ) {
+    // get collider compontent from collided object on collisions.
+    public void GetColliderComponent( GameObject other ) {
 
         // ignore collisions for pick-up items.
         if ( other.tag == "pick_me" ) {
-            CircleCollider2D otherCollider = other.GetComponent<CircleCollider2D>();
+            CircleCollider2D otherCircleCollider = other.GetComponent<CircleCollider2D>();
+            
+            if ( otherCircleCollider != null ) {
+                IgnoreCollision( otherCircleCollider );
+            } 
+        }
 
-            Physics2D.IgnoreCollision( otherCollider, GetComponent<CircleCollider2D>() );
-            Physics2D.IgnoreCollision( otherCollider, KillerColliderRight.GetComponent<CircleCollider2D>() );
-            Physics2D.IgnoreCollision( otherCollider, KillerColliderLeft.GetComponent<CircleCollider2D>() );
-            Physics2D.IgnoreCollision( otherCollider, WeakPointCollider.GetComponent<PolygonCollider2D>() );
+    }
+
+    // ignore collisions with Circle Colliders in 2D controller.
+    private void IgnoreCollision( CircleCollider2D otherCollider ) {
+        Physics2D.IgnoreCollision( otherCollider, GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( otherCollider, KillerColliderRight.GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( otherCollider, KillerColliderLeft.GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( otherCollider, WeakPointCollider.GetComponent<PolygonCollider2D>() );
+    }
+
+    // ensure the enemy is not moved by engine physics when canMove is enabled.
+    private void resetVelocity() {
+        if ( rigidbodyComponent != null ) {
+            rigidbodyComponent.velocity = new Vector3( 0, 0 , 0 );
         }
     }
     

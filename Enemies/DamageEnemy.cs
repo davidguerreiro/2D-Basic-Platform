@@ -19,7 +19,6 @@ public class DamageEnemy : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         GameObject objectCollider = other.gameObject;
-
         
     }
 }
