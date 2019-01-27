@@ -36,6 +36,9 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     private GameObject KillerColliderRight;
     private GameObject KillerColliderLeft;
     private GameObject WeakPointCollider;
+
+    private GameObject player;
+    private Rigidbody2D player_RigiBody2D;
     
     // Start is called before the first frame update.
     void Start()
@@ -46,7 +49,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         if ( canMove ) {
             moveEnemy();
         } else {
-            resetVelocity();
+            ResetVelocity();
         }
 
         // get children colliders.
@@ -54,6 +57,12 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         KillerColliderLeft  = transform.Find( "KillColliderLeft" ).gameObject;
         WeakPointCollider   = transform.Find( "WeakPointCollider" ).gameObject;
 
+        // get player and player RigiBody component.
+        player = GameObject.Find( "Player" );
+        
+        if ( player != null ) {
+            player_RigiBody2D = player.GetComponent<Rigidbody2D>();
+        }
     }
 
     // Update is called once per frame
@@ -64,7 +73,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         if ( canMove ) {
             moveEnemy();
         } else {
-            resetVelocity();
+            ResetVelocity();
         }
     }
 
@@ -80,8 +89,8 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         
         // flip enemy if you collide any kind of solid object ( like walls ).
         if ( Array.IndexOf( isSolid, objectCollider.tag ) > - 1  ) {
-            print( "here" );
             speed *= - 1;
+            Debug.Log( speed ); // TODO: Re-check children collisions because sometimes speed is not multiplied by -1.
         }
 
         // check if the gameobject collided has to be ignored.
@@ -90,7 +99,6 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         }
 
         // destroy enemy if it touchs a game over point.
-
         if ( objectCollider.tag == "player-death" ) {
             Destroy( this.gameObject );
         }
@@ -104,7 +112,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     }
 
     // move enemy on the x axis.
-    void moveEnemy() {
+    private void moveEnemy() {
 
         if ( rigidbodyComponent != null ) {
             rigidbodyComponent.velocity = new Vector3( speed * Time.deltaTime, 0, 0 );
@@ -112,7 +120,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     }
 
     // get collider compontent from collided object on collisions.
-    public void GetColliderComponent( GameObject other ) {
+    private void GetColliderComponent( GameObject other ) {
 
         // ignore collisions for pick-up items.
         if ( other.tag == "pick_me" ) {
@@ -134,10 +142,33 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     }
 
     // ensure the enemy is not moved by engine physics when canMove is enabled.
-    private void resetVelocity() {
+    private void ResetVelocity() {
         if ( rigidbodyComponent != null ) {
             rigidbodyComponent.velocity = new Vector3( 0, 0 , 0 );
         }
     }
+
+    // this enemy is damaged.
+    public void EnemyIsDamaged() {
+        health--;
+
+        if ( health <= 0 ) {
+            EnemyIsDefeated();
+        }
+    }
+
+    // enemy defeated.
+    private void EnemyIsDefeated() {
+        // TODO : Add force to player and animation to enemy.
+        if ( player_RigiBody2D != null ) {
+            player_RigiBody2D.AddForce( new Vector2( 0f, 600f ) );
+            Destroy( this.gameObject ); 
+        } else {
+            Destroy( this.gameObject );
+        }
+
+    }
+
+
     
 }

@@ -1,13 +1,42 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DetectCollision : MonoBehaviour
 {
-    int coins;
-    int score;
-    int lives = 3;
+    private int coins;
+    private int score;
+    private int lives;
+
+    private string[] giveCoins = new string[] {
+        "pick_me",
+        "pick_me_red",
+    };
+
+    private GameController gameController;              // used to add coins, lives, etc.
+
+    // called on the very first frame.
+    void Start() {
+        // get game controller script to modify game logic.
+        gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
+        coins = gameController.GetCoins();
+        lives = gameController.GetLives();
+        score = gameController.GetScore();
+    }
+
+    // called on every frame.
+    void Update() {
+
+    }
+
+    // update values from GameController gameObject.
+    void UpdateGameData() {
+        coins = gameController.GetCoins();
+        lives = gameController.GetLives();
+        score = gameController.GetScore();
+    }
 
     // Check collisons with other objects
     void OnCollisionEnter2D( Collision2D coll ) {
@@ -16,35 +45,40 @@ public class DetectCollision : MonoBehaviour
 
         // check if we are colliding a coin gameobject.
         if ( objectCollided.tag == "pick_me" || objectCollided.tag == "pick_me_red" || objectCollided.tag == "pick_me_blue" ) {
-            // destroy the coin.
+            // get current game data values.
+            UpdateGameData();
+            /**
+             * Destroy object collected - TODO: Remove physycis from coin
+             * so player is not stopped by the collected object on collision.
+             */
+            
             Destroy( objectCollided );
+
+            if ( objectCollided.tag == "pick_me" ) {
+                gameController.AddCoin();
+            }
 
             // red coins give 5 coins.
             if ( objectCollided.tag == "pick_me_red" ) {
                 coins += 5;
-            } else {
-                coins++;
-            }
+                gameController.SetCoins( coins );
+            } 
             
             // add extra life to player when 100 coins are collected.
-            if ( coins > 100 ) {
-                lives++;
-                coins = 0;
+            if ( ( Array.IndexOf( giveCoins, objectCollided.tag ) > - 1 ) && coins >= 100 ) {
+                gameController.AddLifeFromCoins();
             }
 
             // add extra live when the player picks up a live.
             if ( objectCollided.tag == "pick_me_blue" ) {
-                lives++;
+                gameController.AddLife();
             }
 
-            print( "Lives : " + lives + " | Coins  : " + coins + " | Score : " + score );
         }
 
-        // check if we are colliding a red ball so the Scene is restarted.
+        // check if we are colliding a damaging item and if so, game over for now.
         if ( objectCollided.tag == "avoid_me" ) {
-            // destroy the red ball and then reload the scene.
-            Destroy( gameObject );
-            SceneManager.LoadScene( SceneManager.GetActiveScene().name );
+            gameController.GameOver();
         }
     }
 }
