@@ -19,7 +19,10 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     };
 
     public string[] toIgnore = new string[] {       // used to check which gameobjects are ignored by enemies, like coins.
-        "pick_me"
+        "pick_me",
+        "pick_me_red",
+        "pick_me_blue",
+        "enemy",
     };
 
 
@@ -36,6 +39,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
     private GameObject KillerColliderRight;
     private GameObject KillerColliderLeft;
     private GameObject WeakPointCollider;
+    private GameObject WeakPointColliderRight;
 
     private GameObject player;
     private Rigidbody2D player_RigiBody2D;
@@ -56,6 +60,7 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         KillerColliderRight = transform.Find( "KillColliderRight" ).gameObject;
         KillerColliderLeft  = transform.Find( "KillColliderLeft" ).gameObject;
         WeakPointCollider   = transform.Find( "WeakPointCollider" ).gameObject;
+        WeakPointColliderRight = transform.Find( "WeakPointColliderRight" ).gameObject;
 
         // get player and player RigiBody component.
         player = GameObject.Find( "Player" );
@@ -81,8 +86,6 @@ public class BasicEnemy1Behaviour : MonoBehaviour
      * enemy collsions controller - used only for movement
      * to see kill and defeat collisions please check children
      * gameObjects colliders.
-     * 
-     * Move this collision to children gameObject.
      */
      void OnCollisionEnter2D( Collision2D coll ) {
         GameObject objectCollider = coll.gameObject;
@@ -95,12 +98,23 @@ public class BasicEnemy1Behaviour : MonoBehaviour
 
         // check if the gameobject collided has to be ignored.
         if ( Array.IndexOf( toIgnore, coll.gameObject.tag ) > - 1 ) {
-           GetColliderComponent( objectCollider );
+            coll.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            GetColliderComponent( objectCollider );
         }
 
         // destroy enemy if it touchs a game over point.
         if ( objectCollider.tag == "player-death" ) {
             Destroy( this.gameObject );
+        }
+     }
+
+     // exit collision for enemy1 controller.
+     void OnCollisionExit2D( Collision2D other )
+     {
+        GameObject objectCollider = other.gameObject;
+        // restore Dynamic body for collectibles after the enemy finish the collsion.
+        if ( Array.IndexOf( toIgnore, other.gameObject.tag ) > - 1 ) {
+            //other.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
      }
      
@@ -138,7 +152,8 @@ public class BasicEnemy1Behaviour : MonoBehaviour
         Physics2D.IgnoreCollision( otherCollider, GetComponent<CircleCollider2D>() );
         Physics2D.IgnoreCollision( otherCollider, KillerColliderRight.GetComponent<CircleCollider2D>() );
         Physics2D.IgnoreCollision( otherCollider, KillerColliderLeft.GetComponent<CircleCollider2D>() );
-        Physics2D.IgnoreCollision( otherCollider, WeakPointCollider.GetComponent<PolygonCollider2D>() );
+        Physics2D.IgnoreCollision( otherCollider, WeakPointCollider.GetComponent<CircleCollider2D>() );
+        Physics2D.IgnoreCollision( otherCollider, WeakPointColliderRight.GetComponent<CircleCollider2D>() );
     }
 
     // ensure the enemy is not moved by engine physics when canMove is enabled.
