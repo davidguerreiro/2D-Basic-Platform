@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Hearths : MonoBehaviour
 {
-    private GameController gameController;
-    public float speed = .5f;                   // bouncing speed.
-    public float amplitude = .5f;               // bouncing amplitude.
+    private Player player;
+    public int toRecover    = 1;                        // amount of live recovered when
+    public float speed      = .5f;                      // bouncing speed.
+    public float amplitude  = .5f;                      // bouncing amplitude.
     private float tempVal;
     private Vector3 tempPos;                      
-    
+
     // Start is called before the first frame update.
     void Start()
     {
-        gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
+        player  = GameObject.Find( "Player" ).GetComponent<Player>();
         tempVal = transform.position.y;
     }
 
@@ -27,8 +28,8 @@ public class Hearths : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         if ( other.gameObject.tag == "Player" ) {
-            gameController.AddLife();
-            Debug.Log( gameController.GetLives());
+            player.playerRecoversLife( toRecover );
+            Debug.Log( player.GetHealth());
             Destroy( gameObject );
         }
     }

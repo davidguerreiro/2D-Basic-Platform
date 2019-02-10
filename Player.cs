@@ -6,7 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private int health = 3;
+    public int health = 3;
+    private int healthLimit = 3;
     
     private string[] toIgnorePhysics = new string[] {
         "pick_me",
@@ -35,6 +36,19 @@ public class Player : MonoBehaviour
 
     public void SetHealth( int health ) {
         this.health = health;
+    }
+
+    // method to damage player.
+    public void playerIsDamaged() {
+        this.health--;
+    }
+
+    public void playerRecoversLife( int toRecover ) {
+        this.health += toRecover;
+
+        if ( this.health > healthLimit ) {
+            SetHealth( healthLimit );
+        }
     }
 
 }
