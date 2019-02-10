@@ -16,6 +16,7 @@ public class Hearths : MonoBehaviour
     {
         player  = GameObject.Find( "Player" ).GetComponent<Player>();
         tempVal = transform.position.y;
+        tempPos = transform.position;
     }
 
     // Update is called once per frame.
@@ -36,7 +37,7 @@ public class Hearths : MonoBehaviour
 
     // bouncing animation for hearts.
     void AnimateHearth() {
-        tempPos.y = tempVal + amplitude + Mathf.Sin( speed * Time.deltaTime );
+        tempPos.y = tempVal + amplitude + Mathf.Sin( speed * Time.time );
         transform.position = tempPos;
     }
 }
