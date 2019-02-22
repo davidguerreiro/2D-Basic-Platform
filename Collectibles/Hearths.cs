@@ -22,8 +22,7 @@ public class Hearths : MonoBehaviour
     // Update is called once per frame.
     void Update()
     {
-        AnimateHearth();
-        Debug.Log( transform.position.x );
+        // AnimateHearth();
     }
 
     // collision controller for hearts.
@@ -31,17 +30,13 @@ public class Hearths : MonoBehaviour
     {
         if ( other.gameObject.tag == "Player" ) {
             player.playerRecoversLife( toRecover );
-            Debug.Log( player.GetHealth());
             Destroy( gameObject );
         }
     }
 
     // bouncing animation for hearts.
     void AnimateHearth() {
-        //Debug.Log( myCurve.Evaluate( Time.time % myCurve.length ) );
-       //transform.position = new Vector3( transform.position.x, myCurve.Evaluate( Time.time % myCurve.length ), transform.position.z );
-       Vector3 pos = transform.position;
        float newY = Mathf.Sin( Time.time * speed );
-       transform.position = new Vector3( pos.x, ( newY * height ), pos.z );
+       transform.position = new Vector3( transform.position.x, transform.position.y + ( newY * height ), transform.position.z );
     }
 }
