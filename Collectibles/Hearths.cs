@@ -5,18 +5,17 @@ using UnityEngine;
 public class Hearths : MonoBehaviour
 {
     private Player player;
-    public int toRecover    = 1;                        // amount of live recovered when
+    public int toRecover    = 1;                        // amount of live recovered when the played collects the hearth.
     public float speed      = .5f;                      // bouncing speed.
-    public float amplitude  = .5f;                      // bouncing amplitude.
-    private float tempVal;
-    private Vector3 tempPos;                      
+
+    private int amplitude = 1;                          // amplitude for bouncing animation.
+
 
     // Start is called before the first frame update.
     void Start()
     {
         player  = GameObject.Find( "Player" ).GetComponent<Player>();
-        tempVal = transform.position.y;
-        tempPos = transform.position;
+        
     }
 
     // Update is called once per frame.
@@ -37,7 +36,6 @@ public class Hearths : MonoBehaviour
 
     // bouncing animation for hearts.
     void AnimateHearth() {
-        tempPos.y = tempVal + amplitude + Mathf.Sin( speed * Time.time );
-        transform.position = tempPos;
+        
     }
 }
