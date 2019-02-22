@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Hearths : MonoBehaviour
 {
-    private Player player;
     public int toRecover    = 1;                        // amount of live recovered when the played collects the hearth.
-    public float speed      = .5f;                      // bouncing speed.
+    // public AnimationCurve myCurve;                      // Animation Curve item.
+    private Player player;                              // Player gameobject.
+
+    public float speed = 3f;                            // bouncing animation speed.
+    public float height = 0.1f;                         // bouncing animation amplitude.
+
 
 
     // Start is called before the first frame update.
@@ -19,6 +23,7 @@ public class Hearths : MonoBehaviour
     void Update()
     {
         AnimateHearth();
+        Debug.Log( transform.position.x );
     }
 
     // collision controller for hearts.
@@ -33,6 +38,10 @@ public class Hearths : MonoBehaviour
 
     // bouncing animation for hearts.
     void AnimateHearth() {
-       
+        //Debug.Log( myCurve.Evaluate( Time.time % myCurve.length ) );
+       //transform.position = new Vector3( transform.position.x, myCurve.Evaluate( Time.time % myCurve.length ), transform.position.z );
+       Vector3 pos = transform.position;
+       float newY = Mathf.Sin( Time.time * speed );
+       transform.position = new Vector3( pos.x, ( newY * height ), pos.z );
     }
 }
