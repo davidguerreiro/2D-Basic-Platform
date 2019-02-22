@@ -8,14 +8,11 @@ public class Hearths : MonoBehaviour
     public int toRecover    = 1;                        // amount of live recovered when the played collects the hearth.
     public float speed      = .5f;                      // bouncing speed.
 
-    private int amplitude = 1;                          // amplitude for bouncing animation.
-
 
     // Start is called before the first frame update.
     void Start()
     {
         player  = GameObject.Find( "Player" ).GetComponent<Player>();
-        
     }
 
     // Update is called once per frame.
@@ -36,6 +33,6 @@ public class Hearths : MonoBehaviour
 
     // bouncing animation for hearts.
     void AnimateHearth() {
-        
+       
     }
 }
