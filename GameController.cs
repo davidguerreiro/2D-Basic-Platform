@@ -96,9 +96,9 @@ public class GameController : MonoBehaviour
     /// </summary>
     public void PlayerKilled() {
         RemoveLife();
-        Debug.Log(this.lifes);
+        SetCoins( 0 );
 
-        if ( this.lifes > 0 ) { 
+        if ( this.lifes > 0 ) {
             ReloadCurrentScene();
         } else {
             GameOver();
