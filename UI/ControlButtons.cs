@@ -19,7 +19,7 @@ public class ControlButtons : MonoBehaviour
 
     /// <summary>
     /// Load a new scene. Use this method to load new levels.
-    /// </summary?
+    /// </summary>
     /// <param name="levelName">String - Name of the scene to be loaded</param>
     public void startLevel( string levelName ) {
         if ( levelName != "" ) {
