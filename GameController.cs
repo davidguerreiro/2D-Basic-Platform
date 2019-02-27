@@ -12,15 +12,9 @@ public class GameController : MonoBehaviour
     void Start()
     {
         // Data saved in PlayerPrefs.
-        Debug.Log( this.coins );
-        Debug.Log( this.score );
-        Debug.Log( this.lifes );
         SetCoins( PlayerPrefs.GetInt( "coins" ) );
         SetScore( PlayerPrefs.GetInt( "score" ) );
         SetLives( PlayerPrefs.GetInt( "lifes" ) );
-        Debug.Log( this.coins );
-        Debug.Log( this.score );
-        Debug.Log( this.lifes );
         PrintData();
     }
 
@@ -69,17 +63,17 @@ public class GameController : MonoBehaviour
 
     // add a life.
     public void AddLife() {
-        SetLives( this.lifes++ );
+        SetLives( ++this.lifes );
     }
 
     // add score.
     public void AddScore() {
-        SetScore( this.score++ );
+        SetScore( ++this.score );
     }
 
     // add a coin.
     public void AddCoin() {
-        SetCoins( this.coins++ );
+        SetCoins( ++this.coins );
     }
 
     // prints data on the console.
