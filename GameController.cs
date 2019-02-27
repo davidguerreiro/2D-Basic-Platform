@@ -8,6 +8,12 @@ public class GameController : MonoBehaviour
     private int coins;
     private int score;
     private int lifes;
+
+    private string[] nonPlayableScenes = new string[] {
+        "GameCompleted",
+        "GameOver",
+        "HowToPlay",
+    };
     
     void Start()
     {
@@ -79,6 +85,13 @@ public class GameController : MonoBehaviour
     // add a coin.
     public void AddCoin() {
         SetCoins( ++this.coins );
+    }
+
+    /// <summary>
+    /// Get Non playable scenes.
+    /// </summary>
+    public string[] GetNonPlayableScenes() {
+        return nonPlayableScenes;
     }
 
     // prints data on the console.

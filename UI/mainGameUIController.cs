@@ -13,8 +13,8 @@ public class mainGameUIController : MonoBehaviour
     void Start()
     {
         gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
-        coinsText = GameObject.Find( "LivesText" ).GetComponent<Text>();
-        lifesText = GameObject.Find( "ScoreText" ).GetComponent<Text>();
+        coinsText = GameObject.Find( "CoinsText" ).GetComponent<Text>();
+        lifesText = GameObject.Find( "LifesText" ).GetComponent<Text>();
 
         if ( gameController != null && coinsText != null && lifesText != null ) {
             UpdateMainUI();
