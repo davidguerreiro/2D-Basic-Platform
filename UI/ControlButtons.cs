@@ -22,8 +22,6 @@ public class ControlButtons : MonoBehaviour
     /// </summary?
     /// <param name="levelName">String - Name of the scene to be loaded</param>
     public void startLevel( string levelName ) {
-        Debug.Log( "This is called" );
-        Debug.Log( levelName );
         if ( levelName != "" ) {
             SceneManager.LoadScene( levelName );
         } else {

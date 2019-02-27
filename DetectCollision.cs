@@ -53,7 +53,6 @@ public class DetectCollision : MonoBehaviour
              * Destroy object collected - TODO: Remove physycis from coin
              * so player is not stopped by the collected object on collision.
              */
-            print( "here collision" );
 
             if ( objectCollided.tag == "pick_me" ) {
                 gameController.AddCoin();

@@ -7,14 +7,20 @@ public class GameController : MonoBehaviour
 {   
     private int coins;
     private int score;
-    private int lifes = 3;
+    private int lifes;
     
     void Start()
     {
         // Data saved in PlayerPrefs.
+        Debug.Log( this.coins );
+        Debug.Log( this.score );
+        Debug.Log( this.lifes );
         SetCoins( PlayerPrefs.GetInt( "coins" ) );
         SetScore( PlayerPrefs.GetInt( "score" ) );
-        SetLives( PlayerPrefs.GetInt( "lives" ) );
+        SetLives( PlayerPrefs.GetInt( "lifes" ) );
+        Debug.Log( this.coins );
+        Debug.Log( this.score );
+        Debug.Log( this.lifes );
         PrintData();
     }
 
