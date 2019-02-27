@@ -15,13 +15,13 @@ public class GameController : MonoBehaviour
         SetCoins( PlayerPrefs.GetInt( "coins" ) );
         SetScore( PlayerPrefs.GetInt( "score" ) );
         SetLives( PlayerPrefs.GetInt( "lifes" ) );
-        PrintData();
+        // PrintData();
     }
 
     // Update is called once per frame
     void Update()
     {
-        PrintData();
+        // PrintData();
     }
 
     // coins setter and getter.
