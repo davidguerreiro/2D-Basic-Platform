@@ -66,6 +66,11 @@ public class GameController : MonoBehaviour
         SetLives( ++this.lifes );
     }
 
+    // remove life.
+    public void RemoveLife() {
+        SetLives( --this.lifes );
+    }
+
     // add score.
     public void AddScore() {
         SetScore( ++this.score );
@@ -83,6 +88,27 @@ public class GameController : MonoBehaviour
 
     // Game Over.
     public void GameOver() {
+        SceneManager.LoadScene( "GameOver" );
+    }
+
+    /// <summary>
+    /// Method called when the player is killed.
+    /// </summary>
+    public void PlayerKilled() {
+        RemoveLife();
+        Debug.Log(this.lifes);
+
+        if ( this.lifes > 0 ) { 
+            ReloadCurrentScene();
+        } else {
+            GameOver();
+        }
+    }
+
+    /// <summary>
+    /// Reloads current scene.
+    /// </summary>
+    public void ReloadCurrentScene() {
         SceneManager.LoadScene( SceneManager.GetActiveScene().name );
     }
 }

@@ -16,13 +16,19 @@ public class DetectCollision : MonoBehaviour
     };
 
     private GameController gameController;              // used to add coins, lives, etc.
+    private GameObject player;                          // player gameObject.
     private Rigidbody2D player_RigiBody;                // player rigibody used to alter player physics.
 
     // called on the very first frame.
     void Start() {
         // get game controller script to modify game logic.
         gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
-        player_RigiBody = GameObject.Find( "Player" ).GetComponent<Rigidbody2D>();
+        player = GameObject.Find( "Player" );
+        
+        // get component from player if player exists.
+        if ( player != null ) {
+            player_RigiBody = player.GetComponent<Rigidbody2D>();
+        }
         coins = gameController.GetCoins();
         lives = gameController.GetLives();
         score = gameController.GetScore();
@@ -79,7 +85,8 @@ public class DetectCollision : MonoBehaviour
 
         // check if we are colliding a damaging item and if so, game over for now.
         if ( objectCollided.tag == "avoid_me" ) {
-            gameController.GameOver();
+            Destroy( player );
+            gameController.PlayerKilled();
         }
     }
 }
