@@ -11,6 +11,10 @@ public class GameController : MonoBehaviour
     
     void Start()
     {
+        // Data saved in PlayerPrefs.
+        SetCoins( PlayerPrefs.GetInt( "coins" ) );
+        SetScore( PlayerPrefs.GetInt( "score" ) );
+        SetLives( PlayerPrefs.GetInt( "lives" ) );
         PrintData();
     }
 
@@ -27,6 +31,7 @@ public class GameController : MonoBehaviour
 
     public void SetCoins( int coins ) {
         this.coins = coins;
+        PlayerPrefs.SetInt( "coins", this.coins );
     }
 
     // score setter and getter.
@@ -36,6 +41,7 @@ public class GameController : MonoBehaviour
 
     public void SetScore( int score ) {
         this.score = score;
+        PlayerPrefs.SetInt( "score", this.score );
     }
 
 
@@ -46,6 +52,7 @@ public class GameController : MonoBehaviour
 
     public void SetLives( int lifes ) {
         this.lifes = lifes;
+        PlayerPrefs.SetInt( "lifes", this.lifes );
     }
 
     // add life because 100 coins where collected.
@@ -56,17 +63,17 @@ public class GameController : MonoBehaviour
 
     // add a life.
     public void AddLife() {
-        this.lifes++;
+        SetLives( this.lifes++ );
     }
 
     // add score.
     public void AddScore() {
-        this.score++;
+        SetScore( this.score++ );
     }
 
     // add a coin.
     public void AddCoin() {
-        this.coins++;
+        SetCoins( this.coins++ );
     }
 
     // prints data on the console.
