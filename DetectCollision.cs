@@ -61,6 +61,7 @@ public class DetectCollision : MonoBehaviour
              */
 
             if ( objectCollided.tag == "pick_me" ) {
+                GetComponent<AudioSource>().Play();
                 gameController.AddCoin();
             }
 
