@@ -9,7 +9,6 @@ public class SoftBlockLogic : MonoBehaviour
 
     // block logic when it is hit by the player.
     public void blockIsHit() {
-        // TODO - Display animation.
         hardness--;
 
         // if the block if not destroyed, show fissures.
