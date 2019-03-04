@@ -24,7 +24,7 @@ public class companySceneController : MonoBehaviour
         // fade out title.
         StartCoroutine( FadeTextToZeroAlpha( timeDuration, TextComponent, delayInit + 3f ) );
 
-        // load game title scene.
+        // load game title scene - parameter is time to wait.
         StartCoroutine( LoadTitleScene( 7f ) );
 
     }
