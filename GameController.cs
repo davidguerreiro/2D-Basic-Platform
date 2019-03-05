@@ -111,6 +111,7 @@ public class GameController : MonoBehaviour
         RemoveLife();
         SetCoins( 0 );
 
+        // yield return new WaitForSeconds( 6f );
         if ( this.lifes > 0 ) {
             ReloadCurrentScene();
         } else {

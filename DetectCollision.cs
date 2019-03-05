@@ -102,7 +102,8 @@ public class DetectCollision : MonoBehaviour
         if ( objectCollided.tag == "avoid_me" ) {
             audioSource.clip = die;
             audioSource.Play();
-            Destroy( player );
+            // player.SetActive( false );
+            Destroy(player);
             gameController.PlayerKilled();
         }
     }
