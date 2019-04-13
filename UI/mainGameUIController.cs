@@ -33,7 +33,7 @@ public class mainGameUIController : MonoBehaviour
     /// Updates Main Game UI text
     /// </summary>
     private void UpdateMainUI() {
-        coinsText.text = "Coins: " + gameController.GetCoins();
-        lifesText.text = "Lifes: " + gameController.GetLives();
+        coinsText.text = ": " + gameController.GetCoins();
+        lifesText.text = ": " + gameController.GetLives();
     }
 }
