@@ -32,7 +32,7 @@ public class KeepUI : MonoBehaviour
     /// scene has been loaded or current scene is re-loaded.
     /// </summary>
     private void KeepGameObject() {
-        DontDestroyOnLoad( transform.gameObject );
+        // DontDestroyOnLoad( transform.gameObject );
     }
 
     /// <summary>

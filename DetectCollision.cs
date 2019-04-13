@@ -53,10 +53,15 @@ public class DetectCollision : MonoBehaviour
         score = gameController.GetScore();
     }
 
-    // Check collisons with other objects
-    void OnCollisionEnter2D( Collision2D coll ) {
-        // get tag from the GameObject we have just collided.
-        GameObject objectCollided = coll.collider.gameObject;
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this
+    /// object (2D physics only).
+    /// </summary>
+    /// <param name="other">The other Collider2D involved in this collision.</param>
+    void OnTriggerEnter2D(Collider2D other)
+    {   
+         // get tag from the GameObject we have just collided.
+        GameObject objectCollided = other.gameObject;
 
         // check if we are colliding a coin gameobject.
         if ( objectCollided.tag == "pick_me" || objectCollided.tag == "pick_me_red" || objectCollided.tag == "pick_me_blue" ) {
@@ -105,6 +110,6 @@ public class DetectCollision : MonoBehaviour
             // player.SetActive( false );
             Destroy(player);
             gameController.PlayerKilled();
-        }
+        }    
     }
 }

@@ -9,21 +9,11 @@ public class removeHud : MonoBehaviour
 {
     private GameController gameController;
     private string[] nonPlayableScenes;
+    private GameObject levelUI;
     // Start is called before the first frame update
     void Start()
     {
-        gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
-        Debug.Log( gameController );
-
-        if ( gameController != null ) {
-            HideMainUI();
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Init();
     }
 
     /// <summary>
@@ -33,10 +23,30 @@ public class removeHud : MonoBehaviour
         nonPlayableScenes = gameController.GetNonPlayableScenes();
 
         if ( Array.IndexOf( nonPlayableScenes, SceneManager.GetActiveScene().name  ) > -1 ) {
-            Debug.Log( GameObject.Find( "CoinsText" ).GetComponent<Text>().text );
-            GameObject.Find( "CoinsText" ).GetComponent<Text>().text = " ";
-            GameObject.Find( "LifesText" ).GetComponent<Text>().text = " ";
-            Debug.Log( GameObject.Find( "CoinsText" ).GetComponent<Text>().text );
+            GameObject.Find( "GamePlayerData" ).SetActive( false );
+        }
+    }
+
+    /// <summary>
+    /// Display level's UI.
+    /// </summary>
+    private void DisplayMainUI() {
+        if ( levelUI != null ) {
+            levelUI.SetActive( true );
+        }
+    }
+
+    /// <summary>
+    /// Initialise remove UI.
+    /// </summary>
+    private void Init() {
+        gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
+        levelUI = GameObject.Find( "GamePlayerData" );
+
+        if ( gameController != null ) {
+            HideMainUI();
+        } else {
+            DisplayMainUI();
         }
     }
 }

@@ -6,19 +6,15 @@ using UnityEngine.UI;
 
 public class mainGameUIController : MonoBehaviour
 {
-    private GameController gameController;
-    private Text coinsText;
-    private Text lifesText;
+    private GameController gameController;              // GameController gameObject - controls game / level flow.
+    private Text coinsText;                             // Coins text UI gameobject.
+    private Text lifesText;                             // Lifes text UI gameobject.
+    private GameObject levelUI;                         // Level UI panel gameObject.
+
     // Start is called before the first frame update
     void Start()
     {
-        gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
-        coinsText = GameObject.Find( "CoinsText" ).GetComponent<Text>();
-        lifesText = GameObject.Find( "LifesText" ).GetComponent<Text>();
-
-        if ( gameController != null && coinsText != null && lifesText != null ) {
-            UpdateMainUI();
-        }
+        Init();
     }
 
     // Update is called once per frame
@@ -35,5 +31,26 @@ public class mainGameUIController : MonoBehaviour
     private void UpdateMainUI() {
         coinsText.text = ": " + gameController.GetCoins();
         lifesText.text = ": " + gameController.GetLives();
+    }
+
+    /// <summary>
+    /// Init level UI.
+    /// </summary>
+    private void Init() {
+        // init UI.
+        levelUI = GameObject.Find( "GamePlayerData" );
+
+        if ( levelUI != null ) {
+            levelUI.SetActive( true );
+        }
+
+        // update UI during gamePlay.
+        gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
+        coinsText = GameObject.Find( "CoinsText" ).GetComponent<Text>();
+        lifesText = GameObject.Find( "LifesText" ).GetComponent<Text>();
+
+        if ( gameController != null && coinsText != null && lifesText != null ) {
+            UpdateMainUI();
+        }
     }
 }
