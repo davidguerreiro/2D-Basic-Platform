@@ -6,14 +6,22 @@ public class mainMenuCursor : MonoBehaviour
 {
     public float speed = 10f;               // Animation speed.
     public float amplitude = 6f;           // Animation amplitude on the X axis.
-    private bool onRoutine = false;         // Wheter the animation coroutine is running or not.
+    public bool onRoutine = false;         // Wheter the animation coroutine is running or not.
     private float initialX;                 // Initial X cursor value.
     private float toMove;                   // X value to move the cursor on the animation.
 
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        // Init();
+    }
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        Init();    
     }
 
     // Update is called once per frame

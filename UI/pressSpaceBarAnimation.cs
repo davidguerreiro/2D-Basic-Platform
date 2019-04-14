@@ -7,10 +7,11 @@ public class pressSpaceBarAnimation : MonoBehaviour
 {
     public float baseDuration = 1.0f;                   // Base animation duration - Base animation is the standard animation displayed before the user press the space bar button.
     public float transitionDuration = 1.5f;             // Transition animation duration - Transition animation is the animation displayed when the user press the space bar but before the Main Menu is displayed.
+    public Coroutine flashSpaceText;                    // Coroutine used to display the text continually.            
     private Text text;                                  // Text componentent.
     private Color colorDisplayed;                       // Color used when the text is displayed.
     private Color colorHidden;                          // Color used when the text is hidden.
-    private bool displayBaseAnimation;                  // Whether the base animation is being displayed.
+    public bool displayBaseAnimation;                  // Whether the base animation is being displayed.
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class pressSpaceBarAnimation : MonoBehaviour
     void Update()
     {
         if ( displayBaseAnimation ) {
-            StartCoroutine( DisplayBaseAnimation() );
+            flashSpaceText = StartCoroutine( DisplayBaseAnimation() );
         }        
     }
 
