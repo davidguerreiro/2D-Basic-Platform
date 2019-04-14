@@ -29,7 +29,7 @@ public class titleScreenController : MonoBehaviour
     private Text pressSpaceText;                        // Press start text component.
     private AudioSource audioSource;                    // AudioSource component used to display main title UI sounds
     private pressSpaceBarAnimation spaceBarClass;       // Class used internally by press space bar gameObject.
-    private float toMoveMenu = - 634;             // Where to move the main menu once the player press the space bar.
+    private float toMoveMenu = - 660;             // Where to move the main menu once the player press the space bar.
     private Color pressBarColor = new Color( 138, 138, 138, 1f );    // Color used for press space bar pressed animation.
 
     // Start is called before the first frame update
@@ -171,5 +171,8 @@ public class titleScreenController : MonoBehaviour
 
         // select the first item of the menu.
         startGame.Select();
+
+        // fix the bug cursor not being animated when the menu is displayed.
+        startGame.gameObject.GetComponent<mainMenuButtons>().cursor.GetComponent<mainMenuCursor>().onRoutine = false;
     }
 }
