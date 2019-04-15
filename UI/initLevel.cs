@@ -11,7 +11,7 @@ public class initLevel : MonoBehaviour
     private Image coverImage;                   // Scene cover image Image component.
     private float moveSideBarSpeed = 400f;       // Sidebar movement animation speed.
     private float moveLevelDataSpeed = 1200f;     // Text movement animation speed.
-    private float fadeOutSpeed = 8f;            // Scene cover fade out animatio speed. 
+    private float fadeOutSpeed = 4f;            // Scene cover fade out animatio speed. 
     private float toMoveSideBar = - 444.7f;     // Where to move the sidebar
     private float barInitialPosition;           // Sidebar initial position.
     private float toMoveLevelData = - 25f;        // Where to move level data gameObject.
