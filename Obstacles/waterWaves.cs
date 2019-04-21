@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class waterWaves : MonoBehaviour
 {
-    public float speed = 10f;                   // Animation speed.
-    public float amplitude = 5f;                // Wave movement amplitude.
+    public float speed = 0.5f;                   // Animation speed.
+    public float amplitude = 0.5f;                // Wave movement amplitude.
     public bool inverse = false;                // If true, it will go from down to up instead.
     private bool triggerAnimation = false;       // Flag to control the animation coroutine and improve performance.
     private float maxHeight;                     // Max wave height value for Y axis.

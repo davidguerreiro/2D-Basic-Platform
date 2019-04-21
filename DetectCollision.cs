@@ -24,6 +24,7 @@ public class DetectCollision : MonoBehaviour
     public AudioClip collectRedCoin;                    // collect red coin sound clip.
     public AudioClip collectLife;                       // collect a live sound clip.
     public AudioClip die;                               // die sound clip.
+    private bool triggerPlayerDeathAnimation = false;   // Set to true when the player is destroyed.
 
     // called on the very first frame.
     void Start() {
@@ -43,7 +44,9 @@ public class DetectCollision : MonoBehaviour
 
     // called on every frame.
     void Update() {
-
+        if ( triggerPlayerDeathAnimation ) {
+            StartCoroutine( playerIsDestroyed() );
+        }
     }
 
     // update values from GameController gameObject.
@@ -105,11 +108,27 @@ public class DetectCollision : MonoBehaviour
 
         // check if we are colliding a damaging item and if so, game over for now.
         if ( objectCollided.tag == "avoid_me" ) {
-            audioSource.clip = die;
+            triggerPlayerDeathAnimation = true;
             audioSource.Play();
-            // player.SetActive( false );
-            Destroy(player);
+            audioSource.clip = die;
+        
+            player.SetActive( true );
+            Debug.Log( "here" );
+
             gameController.PlayerKilled();
         }    
+    }
+
+    /// <summary>
+    /// Display player destroyed animation and
+    /// sound and then call the player killed
+    /// method from the game controller class.
+    /// </summary>
+    private IEnumerator playerIsDestroyed() {
+        triggerPlayerDeathAnimation = false;
+        audioSource.Play();
+        audioSource.clip = die;
+        yield return new WaitForSeconds( 1f );
+
     }
 }

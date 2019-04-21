@@ -6,8 +6,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    public int health = 3;
-    private int healthLimit = 3;
+    public int health = 3;              // Player health. Not used in current version.
+    private int healthLimit = 3;        // Player maximun health value. Not used in current version.
+    public bool canMove = false;        // Whether the player can move or not.
     
     private string[] toIgnorePhysics = new string[] {
         "pick_me",

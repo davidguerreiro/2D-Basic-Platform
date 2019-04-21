@@ -8,6 +8,7 @@ public class initLevel : MonoBehaviour
     public GameObject SceneCover;               // Scene cover for transition animation.
     public GameObject StartLevelSide;           // Level side image.
     public GameObject LevelData;                // Level Data gameobject which contains level name text, separator bar raw image and level zone text.
+    public GameObject player;                   // Player gameObject.
     private Image coverImage;                   // Scene cover image Image component.
     private float moveSideBarSpeed = 400f;       // Sidebar movement animation speed.
     private float moveLevelDataSpeed = 1200f;     // Text movement animation speed.
@@ -18,6 +19,7 @@ public class initLevel : MonoBehaviour
     private float levelDataInitialPosition;     // Level Data initial position.
     private bool initFadeOut = false;            // Wheter to fade out the scene cover.
     private bool initRemoveItems = false;        // Wheter to remove init level UI items from screen.
+    private Player playerClass;                 // Player class component.
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,7 @@ public class initLevel : MonoBehaviour
         coverImage = SceneCover.GetComponent<Image>();
         barInitialPosition = StartLevelSide.transform.localPosition.x;
         levelDataInitialPosition = LevelData.transform.localPosition.x;
+        playerClass = player.GetComponent<Player>();
 
         // init get elements inside coroutines.
         StartCoroutine( moveSidebarIn() );
@@ -129,7 +132,6 @@ public class initLevel : MonoBehaviour
         }
 
         LevelData.SetActive( false );
-
-        // TODO: Set player.canMove to true.
+        playerClass.canMove = true;
     }
 }
