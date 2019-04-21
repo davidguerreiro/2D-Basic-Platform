@@ -19,7 +19,7 @@ public class DetectCollision : MonoBehaviour
     private GameObject player;                          // player gameObject.
     private Rigidbody2D player_RigiBody;                // player rigibody used to alter player physics.
     private AudioSource audioSource;                    // Player sound effects audioSource.
-
+    private Player playerClass;                         // Player class.
     public AudioClip collectSimpleCoin;                 // collect simple coin sound clip.
     public AudioClip collectRedCoin;                    // collect red coin sound clip.
     public AudioClip collectLife;                       // collect a live sound clip.
@@ -32,6 +32,7 @@ public class DetectCollision : MonoBehaviour
         gameController = GameObject.Find( "GameController" ).GetComponent<GameController>();
         player = GameObject.Find( "Player" );
         audioSource = GetComponent<AudioSource>();
+        playerClass = player.GetComponent<Player>();
         
         // get component from player if player exists.
         if ( player != null ) {
@@ -44,9 +45,7 @@ public class DetectCollision : MonoBehaviour
 
     // called on every frame.
     void Update() {
-        if ( triggerPlayerDeathAnimation ) {
-            StartCoroutine( playerIsDestroyed() );
-        }
+
     }
 
     // update values from GameController gameObject.
@@ -108,27 +107,11 @@ public class DetectCollision : MonoBehaviour
 
         // check if we are colliding a damaging item and if so, game over for now.
         if ( objectCollided.tag == "avoid_me" ) {
-            triggerPlayerDeathAnimation = true;
-            audioSource.Play();
             audioSource.clip = die;
-        
-            player.SetActive( true );
-            Debug.Log( "here" );
 
-            gameController.PlayerKilled();
+            if ( ! playerClass.isDying ) {
+                StartCoroutine( playerClass.playerIsDestroyed( gameController, audioSource  ) );
+            }
         }    
-    }
-
-    /// <summary>
-    /// Display player destroyed animation and
-    /// sound and then call the player killed
-    /// method from the game controller class.
-    /// </summary>
-    private IEnumerator playerIsDestroyed() {
-        triggerPlayerDeathAnimation = false;
-        audioSource.Play();
-        audioSource.clip = die;
-        yield return new WaitForSeconds( 1f );
-
     }
 }
